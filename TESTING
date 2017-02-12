@@ -1,0 +1,10 @@
+TESTING INSTRUCTIONS
+
+Since the frequency of data updates is very slow, in-built testing procedures have been provided.
+
+To disable testing, simply set the variable
+testing_mode in webapp/app.html to 0 (line:19 in webapp/app.html)
+
+The testing procedure uses addition of small random values to the data served by the backend to enable testing with ease.
+
+Initially, testing_mode has been set to 1

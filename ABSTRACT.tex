@@ -1,0 +1,55 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage{a4wide}
+\usepackage{anysize}
+\usepackage[centertags]{amsmath}
+\usepackage{amsfonts,amssymb,amsthm}
+\usepackage{graphicx}
+
+\usepackage[english]{babel}
+% \usepackage[utf8]{inputenc}
+%Includes "References" in the table of contents
+\usepackage[nottoc]{tocbibind}
+
+% \usepackage{natbib}
+% \usepackage{biblatex}
+
+\usepackage{wrapfig}
+\usepackage{using}
+%\usepackage{fullpage}
+%\usepackage{rotating}
+
+\renewcommand{\baselinestretch}{1.2} %line spacing
+\marginsize{1.2in}{1.2in}{1in}{1in}   %left right top bottom
+%\textwidth 6in
+% Title Page
+
+
+\begin{document}
+
+\pagenumbering{roman}
+\pagestyle{plain}
+\def\title{Recommendation of tags in  using Metapaths}
+\def\what{B. Tech Project Report}
+\def\who{Prithwish Mukherjee (12CS10058)}
+\def\guide{Prof. Animesh Mukherjee and Prof. Pawan Goyal}
+
+\section{Introduction}
+
+All bitcoin trading exchanges display the bids and asks placed on their exchanges in a listed tabular form for traders to view, analyse and trade upon. To a real-time trader for whom the bids and asks are displayed, any change in the bids or the asks is very important, as it helps in analysing the market demand movement and predict the future prices. Also he is focused on keeping a track of the latest trades occurring.
+
+\section{Justification}
+
+But the tabular representation makes it very difficult for a trader to keep track of the changes in the latest trade or the bids or asks because he has to compare the latest values displayed in the table with the values that he remembers from the last time he had checked and realise that a transaction has occurred or the bid has changed. This becomes very inconvenient to a trader.
+
+\section{Description}
+
+Order-book Visualiser is a web-page that displays bids, asks, and latest trades in a dynamic animated real-time chart view which is tailor-made with the traders in mind. The bid and ask price distribution can be inferred in one glance without having to dig into numbers and recalling from memory. The bid and ask charts are animated to highlight any changes that occur from the last time they checked. New trades that have occurred since last checked is the first thing the trader sees when he opens the page. Along with it, is the price history for the day in the same page-view also showing the volume history. The charts are being updated in real-time, and the changes can be seen in a visual animated transition of the charts.
+
+\section{Details}
+
+The Visualiser is made for btcxindia exchange data.
+A Back-End is written in NodeJS which connects with api.btcxindia.com, hosts json rest services and the front-end web-page files.
+
+
+
+\end{document}

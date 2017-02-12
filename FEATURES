@@ -1,0 +1,23 @@
+IMPLEMENTED IMPORTANT FEATURES
+
+ORDER_BOOK FEATURES
+
+The initial two charts show-case bids and asks (14 values) in real time.
+
+The user can leave the webpage open and comeback to see the fluctuations in bids and asks volumes relative to the last time.
+
+The relaive gain/loss in volume is indicated by green and red respectively.
+
+With a click on the chart (bids or asks), the app registers the then existing volume, and further updates in the volumes are shown relative to the volumes when user clicked.
+
+This allows the user to easily keep a track of the rise/fall in volume compared to the last time he checked the charts as opposed to the last time the volume got updated.
+
+TRADES_FEATURES
+
+The subsequent graph at the bottom showcases the transactions which occurred within the past 24 hours. The chart gets updated in real time.
+
+The happening of a new transaction is an important event, and the user is informed about the same via a sliding window which carries details of the last/most recent transaction, which also gets updated on the graph.
+
+With a click on the slided window, the user can dismiss it.
+
+In case of multiple new transactions occurring while a user is not paying attention, the sliding window will always convey details about the latest transaction only.
