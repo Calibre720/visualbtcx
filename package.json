@@ -1,0 +1,12 @@
+{
+  "name": "btcx_visualizer",
+  "description": "A visualizer for trades on btcxindia",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x",
+    "request": "^2.67.0",
+    "request-json": "^0.5.5",
+    "serve-static": "^1.10.1"
+  }
+}

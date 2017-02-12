@@ -1,0 +1,567 @@
+<html>
+<body style="background-color: #87CEEB; padding: 0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="slidenav" style="position: fixed; padding: 0; width:100%; opacity: 0.7; margin-top: -300px; margin-left: -10px; height: 65px; background-color: #000066; z-index:999999">
+    <div id="lastTrade"style="opacity: 1.0; color:red; text-align:center; padding: 10px; font-size: 225%"></div>
+
+</div>
+
+<div id="wrapper" style="width:100%; padding: 0">
+    <div id="asks" class="float left" style="float:left; width:49%"></div>
+    <div id="bids" class="float right" style="float:right; width:49%"></div>
+</div>
+<div id="trades" style="width: 90%; padding: 5% 5%"></div>
+
+<script>
+    var testing_mode = 0;
+</script>
+
+<script>
+$(function () {
+    $('#asks').highcharts({
+
+        colors: ['red', 'green', 'yellow'],
+        chart: {
+            type: 'column',
+            backgroundColor: '#87CEEB',
+            animation: {
+                duration: 1000
+            }
+
+        },
+        title: {
+            text: 'ASKS'
+        },
+        xAxis: {
+            categories: [],
+            labels: {
+                format: '{value} INR',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Price'
+            }
+        },
+        yAxis: {
+            min: 0,
+            labels: {
+                format: '{value} BTC',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Volume'
+            },
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+            }
+        },
+        legend: {
+            enabled: false,
+            align: 'right',
+            x: -30,
+            verticalAlign: 'top',
+            y: 25,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
+        },
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name} {point.y}'
+        },
+        plotOptions: {
+
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: false,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                        textShadow: '0 0 3px black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Volume Lost',
+            data: []
+        }, {
+            name: 'Volume Gained',
+            data: []
+        }, {
+            name: ' ',
+            data: []
+        }]
+    });
+});
+</script>
+<script>
+$(function () {
+    $('#bids').highcharts({
+
+        colors: ['red', 'green', 'yellow'],
+        chart: {
+            type: 'column',
+            backgroundColor: '#87CEEB',
+            animation: {
+                duration: 1000
+            }
+
+        },
+        title: {
+            text: 'BIDS'
+        },
+        xAxis: {
+            categories: [],
+            labels: {
+                format: '{value} INR',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+
+            title: {
+                text: 'Price'
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Volume'
+            },
+            labels: {
+                format: '{value} BTC',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+            }
+        },
+        legend: {
+            enabled: false,
+            align: 'right',
+            x: -30,
+            verticalAlign: 'top',
+            y: 25,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
+        },
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name} {point.y}'
+        },
+        plotOptions: {
+
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: false,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                        textShadow: '0 0 3px black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Volume Lost',
+            data: []
+        }, {
+            name: 'Volume Gained',
+            data: []
+        }, {
+            name: ' ',
+            data: []
+        }]
+    });
+});
+</script>
+
+<script>
+
+$(function () {
+    $('#trades').highcharts({
+        chart: {
+            zoomType: 'xy',
+            backgroundColor: '#87CEEB'
+        },
+        title: {
+            text: 'Transactions in past 24 hours'
+        },
+        xAxis: [{
+            categories: [],
+            crosshair: true
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value} INR',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Price',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: 'Volume',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            labels: {
+                format: '{value} BTC',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            enabled: false,
+            layout: 'vertical',
+            align: 'left',
+            x: 120,
+            verticalAlign: 'top',
+            y: 100,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        series: [{
+            name: 'Volume',
+            type: 'column',
+            yAxis: 1,
+            data: [],
+            tooltip: {
+                valueSuffix: ' BTC'
+            }
+
+        }, {
+            name: 'Price',
+            type: 'spline',
+            data: [],
+            tooltip: {
+                valueSuffix: ' INR'
+            }
+        }]
+    });
+});
+</script>
+
+
+
+
+<script>
+function create_trades_request(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+    // Check if the XMLHttpRequest object has a "withCredentials" property.
+    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+    xhr.open(method, url, true);
+  } else if (typeof XDomainRequest != "undefined") {
+    // Otherwise, check if XDomainRequest.
+    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+  } else {
+    // Otherwise, CORS is not supported by the browser.
+    xhr = null;
+  }
+  xhr.send();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        obj = JSON.parse(xhr.responseText);
+
+        var trades_chart = $('#trades').highcharts();
+        var len = Object.keys(obj).length;
+
+        // for the first call
+        if(lastTradeTime == 0){
+            lastTradeTime = new Date(obj[0]['time']).getTime();
+            //console.log('time set to '+lastTradeTime);
+            for(var i=len-1; i >= 0; i--){
+                tradeTimestamps[len-i-1] = obj[i]['time'];
+                tradeVolumes[len-i-1] = parseFloat(obj[i]['volume']);
+                tradePrices[len-i-1] = parseInt(obj[i]['price']);
+            }
+            trades_chart.xAxis[0].setCategories(tradeTimestamps,false);
+            trades_chart.series[0].setData(tradeVolumes,false);
+            trades_chart.series[1].setData(tradePrices,false);
+            trades_chart.redraw();
+        }
+        else{
+            //identify new trades
+            var index;
+
+            for(index=0;index<len;index++){
+                //console.log('comparing '+lastTradeTime+' with '+(new Date(obj[index]['time'])).getTime());
+                if(testing_mode == 1){
+                    if(lastTradeTime+Math.random()*10000000 >= (new Date(obj[index]['time'])).getTime()+Math.random()*10000000){
+                        //console.log('random is '+Math.random());
+                        break;
+                    }
+                }
+                else{
+                    if(lastTradeTime >= (new Date(obj[index]['time'])).getTime()){
+                        //console.log('random is '+Math.random());
+                        break;
+                    }
+                }
+            }
+            index--;
+            if(index != -1){
+                //console.log('index is'+index);
+                for(var i=index; i >= 0; i--){
+                    tradeTimestamps[tradeTimestamps.length] = obj[i]['time'];
+                    tradeVolumes[tradeVolumes.length] = parseFloat(obj[i]['volume']);
+                    tradePrices[tradePrices.length] = parseInt(obj[i]['price']);
+                }
+                //lastTradeTime = new Date(obj[0]['time']).getTime();
+                lastTradeTime = new Date(obj[0]['time']).getTime();
+                //console.log('time set to '+lastTradeTime);
+
+                //console.log('len is '+tradeVolumes[tradeVolumes.length-1]);
+
+                trades_chart.xAxis[0].setCategories(tradeTimestamps,false);
+                trades_chart.series[0].setData(tradeVolumes,false);
+                trades_chart.series[1].setData(tradePrices,false);
+                trades_chart.redraw();
+                $('#lastTrade').html('<b>'+obj[0]['time']+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+obj[0]['price']+' INR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+obj[0]['volume']+' BTC</b>');
+                $('#slidenav').animate({
+                        marginTop: Math.max(0, (($(window).height()/3))) + "px"
+                    }, 1000);
+            }
+        }
+
+    }
+  }
+}
+</script>
+
+
+<script>
+
+function create_order_book_request(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+    // Check if the XMLHttpRequest object has a "withCredentials" property.
+    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+    xhr.open(method, url, true);
+  } else if (typeof XDomainRequest != "undefined") {
+    // Otherwise, check if XDomainRequest.
+    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+  } else {
+    // Otherwise, CORS is not supported by the browser.
+    xhr = null;
+  }
+  xhr.send();
+  xhr.onreadystatechange = function() {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+
+    obj = JSON.parse(xhr.responseText);
+
+    var bids_chart = $('#bids').highcharts();
+
+    for (var i = 0; i < 14; i++) {
+        updatedBids[i] = obj.bids[i][1];
+        if(testing_mode == 1){
+            updatedBidsVolume[i] = Math.max(0.1,parseFloat(obj.bids[i][0]) + Math.round(Math.random()*20)/10 - Math.round(Math.random()*20)/10);
+        }
+        else{
+            updatedBidsVolume[i] = parseFloat(obj.bids[i][0]);
+        }
+        updatedBidsVolume[i] = Math.round(updatedBidsVolume[i]*10)/10;
+
+        updatedBidsVolumeLoss[i] = 0.0;
+        updatedBidsVolumeGain[i] = 0.0;
+        if(updatedBids[i] in bidsMap){
+            var oldVolume = bidsMap[updatedBids[i]]['volume'];
+            var newVolume = updatedBidsVolume[i];
+            if(newVolume > oldVolume){
+                updatedBidsVolumeGain[i] = newVolume - oldVolume;
+                updatedBidsVolumeGain[i] = Math.round(updatedBidsVolumeGain[i]*10)/10;
+            }
+            if(newVolume < oldVolume){
+                updatedBidsVolumeLoss[i] = oldVolume - newVolume;
+                updatedBidsVolumeLoss[i] = Math.round(updatedBidsVolumeLoss[i]*10)/10;
+            }
+        }
+    }
+
+    //console.log(bidsMap);
+    for (var i = 0; i < 14; i++){
+        if(!(updatedBids[i] in bidsMap)){
+            bidsMap[obj.bids[i][1]] = {volume: updatedBidsVolume[i]};
+        }
+        updatedBidsVolume[i] = bidsMap[updatedBids[i]]['volume'] - updatedBidsVolumeLoss[i];
+        updatedBidsVolume[i] = Math.round(updatedBidsVolume[i]*10)/10;
+
+    }
+
+    bids_chart.xAxis[0].setCategories(updatedBids.slice(),false);
+    bids_chart.series[0].setData(updatedBidsVolumeLoss.slice(),false);
+    bids_chart.series[1].setData(updatedBidsVolumeGain.slice(),false);
+    bids_chart.series[2].setData(updatedBidsVolume.slice(),false);
+
+    bids_chart.redraw();
+
+    var asks_chart = $('#asks').highcharts();
+
+    for (var i = 0; i < 14; i++) {
+        updatedAsks[i] = obj.asks[i][1];
+        if(testing_mode == 1){
+            updatedAsksVolume[i] = Math.max(0.1,parseFloat(obj.asks[i][0]) + Math.round(Math.random()*20)/10 - Math.round(Math.random()*20)/10);
+        }
+        else{
+            updatedAsksVolume[i] = parseFloat(obj.asks[i][0]);
+        }
+        updatedAsksVolume[i] = Math.round(updatedAsksVolume[i]*10)/10;
+
+        updatedAsksVolumeLoss[i] = 0.0;
+        updatedAsksVolumeGain[i] = 0.0;
+        if(updatedAsks[i] in asksMap){
+            var oldVolume = asksMap[updatedAsks[i]]['volume'];
+            var newVolume = updatedAsksVolume[i];
+            if(newVolume > oldVolume){
+                updatedAsksVolumeGain[i] = newVolume - oldVolume;
+                updatedAsksVolumeGain[i] = Math.round(updatedAsksVolumeGain[i]*10)/10;
+            }
+            if(newVolume < oldVolume){
+                updatedAsksVolumeLoss[i] = oldVolume - newVolume;
+                updatedAsksVolumeLoss[i] = Math.round(updatedAsksVolumeLoss[i]*10)/10;
+            }
+        }
+    }
+
+    //console.log(asksMap);
+    for (var i = 0; i < 14; i++){
+        if(!(updatedAsks[i] in asksMap)){
+            asksMap[obj.asks[i][1]] = {volume: updatedAsksVolume[i]};
+        }
+        updatedAsksVolume[i] = asksMap[updatedAsks[i]]['volume'] - updatedAsksVolumeLoss[i];
+        updatedAsksVolume[i] = Math.round(updatedAsksVolume[i]*10)/10;
+    }
+
+
+    asks_chart.xAxis[0].setCategories(updatedAsks.slice(),false);
+    asks_chart.series[0].setData(updatedAsksVolumeLoss.slice(),false);
+    asks_chart.series[1].setData(updatedAsksVolumeGain.slice(),false);
+    asks_chart.series[2].setData(updatedAsksVolume.slice(),false);
+
+    asks_chart.redraw();
+    //console.log(asks_chart.xAxis[0].categories);
+
+
+  }
+}
+}
+</script>
+
+
+<script>
+var bidsMap = [];
+var asksMap = [];
+var lastTradeTime = 0;
+var tradeTimestamps = [];
+var tradeVolumes = [];
+var tradePrices = [];
+var updatedBids = [];
+var updatedAsks = [];
+var updatedAsksVolume = [];
+var updatedBidsVolume = [];
+var updatedAsksVolumeLoss = [];
+var updatedBidsVolumeLoss = [];
+var updatedAsksVolumeGain = [];
+var updatedBidsVolumeGain = [];
+
+
+function getReady(){
+    $('#slidenav').click(function(){
+        //console.log('am here');
+        $('#slidenav').animate({
+            'margin-top': '-300px'
+        }, 1000);
+    });
+
+    $('#bids').click(function(){
+        //console.log('execute');
+        var emptyData = [];
+        var bidsData = [];
+        var bids_chart = $('#bids').highcharts();
+        bidsMap = [];
+
+        for (var i = 0; i < 14; i++){
+            bidsData[i] = updatedBidsVolume[i] + updatedBidsVolumeGain[i];
+            bidsData[i] = Math.round(bidsData[i]*10)/10;
+            bidsMap[updatedBids[i]] = {volume: bidsData[i]};
+            emptyData[i] = 0.0;
+        }
+        bids_chart.series[0].setData(emptyData,false);
+        bids_chart.series[1].setData(emptyData,false);
+        bids_chart.series[2].setData(bidsData,false);
+        bids_chart.redraw();
+
+    });
+
+    $('#asks').click(function(){
+        //console.log('execute');
+        var emptyData = [];
+        var asksData = [];
+        var asks_chart = $('#asks').highcharts();
+        asksMap = [];
+
+        for (var i = 0; i < 14; i++){
+            asksData[i] = updatedAsksVolume[i] + updatedAsksVolumeGain[i];
+            asksData[i] = Math.round(asksData[i]*10)/10;
+            asksMap[updatedAsks[i]] = {volume: asksData[i]};
+            emptyData[i] = 0.0;
+        }
+        asks_chart.series[0].setData(emptyData,false);
+        asks_chart.series[1].setData(emptyData,false);
+        asks_chart.series[2].setData(asksData,false);
+        asks_chart.redraw();
+
+    });
+
+
+    create_order_book_request('GET', 'order_book');
+    create_trades_request('GET', 'trades');
+
+    setInterval(create_order_book_request,30000,'GET', 'order_book');
+    setInterval(create_trades_request,10000,'GET', 'trades');
+
+}
+window.onload = getReady();
+</script>
+</body>
+</html>

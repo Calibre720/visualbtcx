@@ -1,0 +1,45 @@
+INSTALL INSTRUCTIONS
+
+-->Change the working directory to :
+btcx_hackathon
+
+-->To start the server, use the following command:
+
+node server.js
+
+This hosts the app at
+localhost:3000/app.html
+
+-->The server configuration resides in server.js.
+
+-->The default port on which the server starts is 3000, and can be changed in the server.js file if need be.
+
+-->If the system on which the server is being run uses PROXY to access internet, then 'requests' module need to be made aware of the same via replacing
+
+'http://api.btcxindia.com/order_book/'
+with
+{'url':'http://api.btcxindia.com/order_book/','proxy':'http://proxyToBeUsed:port'}
+
+and
+
+'http://api.btcxindia.com/trades/'
+with
+{'url':'http://api.btcxindia.com/trades/','proxy':'http://proxyToBeUsed:port'}
+
+-->The only dependency is having node.js (npm) installed
+-->The required submodules have been provided with the application
+-->Still, in the case of any dependency issue, install request and express via npm.
+
+FINALLY NAVIGATE TO
+
+localhost:3000/app.html
+
+
+
+CONTACT INFORMATION
+
+In case of any issues, fixes or any other technical issue, feel free to contact
+
+Haritabh Singh : haritabh.z01@gmail.com
+
+Rohan Sharan : rohan.sharan88@gmail.com
